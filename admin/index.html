@@ -3,266 +3,225 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>后台管理 - 家庭点餐</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<title>后台管理 - Siver家庭点餐</title>
+<link rel="shortcut icon" href="https://www.siver.top/favorite/favicon.ico">
+<link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --primary: #C8392B; --primary-dark: #9B2C1F; --primary-light: #FDECEA;
-  --accent: #E8A930; --bg: #F5F5F5; --bg-card: #FFFFFF;
-  --text-dark: #1A1A2E; --text-mid: #444; --text-light: #888;
-  --border: #E0E0E0; --shadow: rgba(0,0,0,0.08); --sidebar-w: 220px;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; font-family: 'Noto Sans SC', sans-serif; background: var(--bg); color: var(--text-dark); }
-
+:root{--primary:#C8392B;--primary-dark:#9B2C1F;--primary-light:#FDECEA;--accent:#E8A930;--bg:#F5F5F5;--bg-card:#fff;--text-dark:#1A1A2E;--text-mid:#444;--text-light:#888;--border:#E0E0E0;--shadow:rgba(0,0,0,0.08);--sw:220px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text-dark);}
 /* Login */
-#loginPage {
-  display: flex; align-items: center; justify-content: center; height: 100vh;
-  background: linear-gradient(135deg, #1A1A2E 0%, #C8392B 100%);
-}
-.admin-login-box {
-  background: #fff; border-radius: 20px; padding: 40px 36px; width: 90%; max-width: 360px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-}
-.admin-login-box h2 { font-family: 'Noto Serif SC', serif; color: var(--primary); margin-bottom: 6px; font-size: 22px; }
-.admin-login-box p { color: var(--text-light); font-size: 13px; margin-bottom: 24px; }
-.form-group { margin-bottom: 14px; }
-.form-group label { display: block; font-size: 13px; font-weight: 500; color: var(--text-mid); margin-bottom: 6px; }
-.form-group input, .form-group select, .form-group textarea {
-  width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px;
-  font-size: 14px; background: var(--bg); color: var(--text-dark); outline: none;
-  font-family: inherit; transition: border .2s;
-}
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--primary); }
-.form-group textarea { resize: vertical; min-height: 80px; }
-.btn-primary {
-  padding: 11px 22px; background: var(--primary); color: #fff; border: none; border-radius: 10px;
-  font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all .2s;
-}
-.btn-primary:hover { background: var(--primary-dark); }
-.btn-danger { background: #dc3545; }
-.btn-danger:hover { background: #b02a37; }
-.btn-secondary { background: #6c757d; }
-.btn-secondary:hover { background: #5a6268; }
-.btn-success { background: #28a745; }
-.btn-success:hover { background: #1e7e34; }
-.btn-sm { padding: 6px 14px; font-size: 12px; }
-.btn-icon { background: none; border: none; cursor: pointer; padding: 4px 8px; border-radius: 6px; font-size: 16px; transition: background .2s; }
-.btn-icon:hover { background: var(--bg); }
-.err { color: var(--primary); font-size: 13px; margin-top: 8px; }
-
+#loginPage{display:flex;align-items:center;justify-content:center;height:100vh;background:linear-gradient(135deg,#1A1A2E 0%,#C8392B 100%);}
+.abox{background:#fff;border-radius:20px;padding:40px 36px;width:90%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+.abox h2{font-family:'Noto Serif SC',serif;color:var(--primary);margin-bottom:4px;font-size:22px;}
+.abox p{color:var(--text-light);font-size:13px;margin-bottom:22px;}
+.fg{margin-bottom:14px;}
+.fg label{display:block;font-size:13px;font-weight:500;color:var(--text-mid);margin-bottom:5px;}
+.fg input,.fg select,.fg textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;background:var(--bg);color:var(--text-dark);outline:none;font-family:inherit;transition:border .2s;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--primary);}
+.fg textarea{resize:vertical;min-height:80px;}
+.fg .hint{font-size:11px;color:var(--text-light);margin-top:4px;}
+.btn{padding:11px 20px;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s;display:inline-flex;align-items:center;gap:6px;}
+.btn-primary{background:var(--primary);color:#fff;} .btn-primary:hover{background:var(--primary-dark);}
+.btn-danger{background:#dc3545;color:#fff;} .btn-danger:hover{background:#b02a37;}
+.btn-warn{background:#fd7e14;color:#fff;} .btn-warn:hover{background:#e06000;}
+.btn-secondary{background:#6c757d;color:#fff;} .btn-secondary:hover{background:#5a6268;}
+.btn-success{background:#28a745;color:#fff;} .btn-success:hover{background:#1e7e34;}
+.btn-sm{padding:6px 13px;font-size:12px;}
+.btn-xs{padding:4px 10px;font-size:11px;}
+.err{color:var(--primary);font-size:13px;margin-top:8px;}
 /* Layout */
-#adminApp { display: none; height: 100vh; }
-.layout { display: flex; height: 100%; }
-
-/* Sidebar */
-.sidebar {
-  width: var(--sidebar-w); background: #1A1A2E; color: #fff;
-  display: flex; flex-direction: column; flex-shrink: 0;
-}
-.sidebar-logo { padding: 24px 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); }
-.sidebar-logo h1 { font-family: 'Noto Serif SC', serif; font-size: 16px; color: var(--accent); }
-.sidebar-logo p { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 2px; }
-.sidebar-nav { flex: 1; padding: 12px 0; }
-.nav-item {
-  display: flex; align-items: center; gap: 12px; padding: 13px 20px;
-  color: rgba(255,255,255,0.65); cursor: pointer; transition: all .18s;
-  font-size: 14px; border-left: 3px solid transparent;
-}
-.nav-item:hover { color: #fff; background: rgba(255,255,255,0.06); }
-.nav-item.active { color: #fff; border-left-color: var(--primary); background: rgba(200,57,43,0.15); }
-.nav-item-icon { font-size: 18px; width: 22px; text-align: center; }
-.sidebar-footer { padding: 16px 20px; border-top: 1px solid rgba(255,255,255,0.08); }
-.sidebar-user { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 8px; }
-.sidebar-logout { color: rgba(255,255,255,0.5); font-size: 13px; cursor: pointer; }
-.sidebar-logout:hover { color: #fff; }
-
-/* Main content */
-.main-content { flex: 1; overflow-y: auto; padding: 28px; }
-.page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
-.page-header h2 { font-family: 'Noto Serif SC', serif; font-size: 22px; font-weight: 700; }
-.section { display: none; }
-.section.active { display: block; }
-
-/* Cards & Tables */
-.card { background: var(--bg-card); border-radius: 14px; box-shadow: 0 2px 12px var(--shadow); overflow: hidden; margin-bottom: 20px; }
-.card-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-.card-header h3 { font-size: 15px; font-weight: 700; }
-.card-body { padding: 20px; }
-
-table { width: 100%; border-collapse: collapse; }
-th { text-align: left; padding: 10px 14px; font-size: 12px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--border); }
-td { padding: 12px 14px; font-size: 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: #fafafa; }
-.td-actions { display: flex; gap: 6px; }
-
+#adminApp{display:none;height:100vh;}
+.layout{display:flex;height:100%;}
+.sidebar{width:var(--sw);background:#1A1A2E;color:#fff;display:flex;flex-direction:column;flex-shrink:0;}
+.sidebar-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.08);}
+.sidebar-logo h1{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--accent);}
+.sidebar-logo p{font-size:12px;color:rgba(255,255,255,.45);margin-top:2px;}
+.sidebar-nav{flex:1;padding:10px 0;overflow-y:auto;}
+.nav-item{display:flex;align-items:center;gap:12px;padding:12px 20px;color:rgba(255,255,255,.6);cursor:pointer;transition:all .18s;font-size:14px;border-left:3px solid transparent;}
+.nav-item:hover{color:#fff;background:rgba(255,255,255,.06);}
+.nav-item.active{color:#fff;border-left-color:var(--primary);background:rgba(200,57,43,.15);}
+.nav-item-icon{font-size:17px;width:20px;text-align:center;}
+.sidebar-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.08);}
+.sidebar-user{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:6px;}
+.sidebar-logout{color:rgba(255,255,255,.45);font-size:13px;cursor:pointer;} .sidebar-logout:hover{color:#fff;}
+.main-content{flex:1;overflow-y:auto;padding:26px;}
+.section{display:none;} .section.active{display:block;}
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:10px;}
+.page-header h2{font-family:'Noto Serif SC',serif;font-size:21px;font-weight:700;}
+/* Cards */
+.card{background:var(--bg-card);border-radius:14px;box-shadow:0 2px 12px var(--shadow);overflow:hidden;margin-bottom:20px;}
+.card-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.card-header h3{font-size:14px;font-weight:700;}
+.card-body{padding:20px;}
+/* Table */
+table{width:100%;border-collapse:collapse;}
+th{text-align:left;padding:9px 14px;font-size:11px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid var(--border);}
+td{padding:11px 14px;font-size:14px;border-bottom:1px solid var(--border);vertical-align:middle;}
+tr:last-child td{border-bottom:none;} tr:hover td{background:#fafafa;}
+.td-actions{display:flex;gap:6px;flex-wrap:wrap;}
 /* Stats */
-.stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); gap: 16px; margin-bottom: 24px; }
-.stat-card { background: var(--bg-card); border-radius: 14px; padding: 20px; box-shadow: 0 2px 12px var(--shadow); }
-.stat-icon { font-size: 28px; margin-bottom: 8px; }
-.stat-val { font-size: 28px; font-weight: 700; font-family: 'Noto Serif SC', serif; color: var(--primary); }
-.stat-label { font-size: 13px; color: var(--text-light); margin-top: 2px; }
-
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-bottom:22px;}
+.stat-card{background:var(--bg-card);border-radius:14px;padding:18px;box-shadow:0 2px 12px var(--shadow);}
+.stat-icon{font-size:26px;margin-bottom:6px;}
+.stat-val{font-size:26px;font-weight:700;font-family:'Noto Serif SC',serif;color:var(--primary);}
+.stat-label{font-size:12px;color:var(--text-light);margin-top:2px;}
 /* Modal */
-.modal-bg {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 500;
-  display: none; align-items: center; justify-content: center; padding: 20px;
-}
-.modal-bg.open { display: flex; }
-.modal-box { background: #fff; border-radius: 16px; padding: 28px; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
-.modal-box h3 { font-size: 17px; font-weight: 700; margin-bottom: 20px; font-family: 'Noto Serif SC', serif; }
-.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
-
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-bg.open{display:flex;}
+.modal-box{background:#fff;border-radius:16px;padding:26px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2);}
+.modal-box h3{font-size:16px;font-weight:700;margin-bottom:18px;font-family:'Noto Serif SC',serif;}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px;}
+/* Tags */
+.cat-tag{display:inline-block;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:500;}
+.meal-tag-b{background:#FFF3CD;color:#856404;padding:2px 8px;border-radius:10px;font-size:11px;}
+.meal-tag-l{background:#D4EDDA;color:#155724;padding:2px 8px;border-radius:10px;font-size:11px;}
+.meal-tag-d{background:#CCE5FF;color:#004085;padding:2px 8px;border-radius:10px;font-size:11px;}
+.badge{display:inline-block;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:600;}
+.badge-count{background:var(--primary-light);color:var(--primary);}
+/* Filter */
+.filter-bar{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center;}
+.filter-bar input,.filter-bar select{padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:#fff;font-family:inherit;outline:none;}
+.filter-bar input:focus,.filter-bar select:focus{border-color:var(--primary);}
+.empty-state{text-align:center;padding:40px;color:var(--text-light);}
+.empty-state .icon{font-size:40px;margin-bottom:10px;}
 /* Image preview */
-.img-preview { width: 80px; height: 60px; border-radius: 8px; object-fit: cover; background: var(--bg); display: inline-flex; align-items: center; justify-content: center; font-size: 24px; border: 1px solid var(--border); overflow: hidden; vertical-align: middle; }
-.img-preview img { width: 100%; height: 100%; object-fit: cover; }
-
-/* Tag */
-.cat-tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
-.tag-素菜 { background: #E8F5E9; color: #2E7D32; }
-.tag-荤菜 { background: #FCE4EC; color: #B71C1C; }
-.tag-汤 { background: #E3F2FD; color: #1565C0; }
-.tag-饭 { background: #FFF3E0; color: #E65100; }
-
-.meal-tag-b { background: #FFF3CD; color: #856404; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
-.meal-tag-l { background: #D4EDDA; color: #155724; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
-.meal-tag-d { background: #CCE5FF; color: #004085; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
-
-.badge { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 12px; font-weight: 600; }
-.badge-count { background: var(--primary-light); color: var(--primary); }
-
-/* Filter bar */
-.filter-bar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
-.filter-bar input, .filter-bar select { padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; background: #fff; font-family: inherit; outline: none; }
-.filter-bar input:focus, .filter-bar select:focus { border-color: var(--primary); }
-
-.empty-state { text-align: center; padding: 50px; color: var(--text-light); }
-.empty-state .icon { font-size: 44px; margin-bottom: 12px; }
-
-.loading-state { text-align: center; padding: 30px; color: var(--text-light); }
+.img-preview{width:70px;height:56px;border-radius:8px;object-fit:cover;background:var(--bg);display:inline-flex;align-items:center;justify-content:center;font-size:22px;border:1px solid var(--border);overflow:hidden;vertical-align:middle;}
+.img-preview img{width:100%;height:100%;object-fit:cover;}
+/* Image grid */
+.img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;}
+.img-card{background:var(--bg-card);border-radius:12px;overflow:hidden;border:1px solid var(--border);box-shadow:0 1px 6px var(--shadow);}
+.img-card img{width:100%;height:100px;object-fit:cover;display:block;}
+.img-card-info{padding:8px 10px;}
+.img-card-name{font-size:11px;color:var(--text-light);word-break:break-all;margin-bottom:4px;}
+.img-card-actions{display:flex;gap:6px;}
+/* Cat chips */
+.cat-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.cat-chip{padding:7px 16px;border-radius:20px;border:1.5px solid var(--border);background:var(--bg-card);color:var(--text-mid);font-size:13px;cursor:pointer;transition:all .18s;font-family:inherit;display:inline-flex;align-items:center;gap:6px;}
+.cat-chip:hover{border-color:var(--primary);color:var(--primary);}
+.cat-chip .del-chip{color:var(--text-light);font-size:15px;line-height:1;} .cat-chip .del-chip:hover{color:#dc3545;}
+/* Section tabs */
+.tabs{display:flex;gap:2px;background:var(--bg);border-radius:12px;padding:4px;margin-bottom:20px;width:fit-content;}
+.tab-btn{padding:8px 18px;border:none;background:transparent;border-radius:9px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;color:var(--text-mid);transition:all .18s;}
+.tab-btn.active{background:#fff;color:var(--primary);box-shadow:0 1px 6px var(--shadow);font-weight:700;}
+/* Upload preview */
+#uploadPreview{margin-top:10px;max-width:200px;border-radius:10px;display:none;}
 </style>
 </head>
 <body>
 
-<!-- ADMIN LOGIN -->
+<!-- LOGIN -->
 <div id="loginPage">
-  <div class="admin-login-box">
-    <h2>⚙️ 后台管理</h2>
-    <p>家庭点餐系统管理员入口</p>
-    <div class="form-group">
-      <label>管理员账号</label>
-      <input type="text" id="adminUser" placeholder="管理员用户名">
-    </div>
-    <div class="form-group">
-      <label>密码</label>
-      <input type="password" id="adminPass" placeholder="管理员密码">
-    </div>
-    <button class="btn-primary" style="width:100%;padding:13px;" onclick="adminLogin()">登 录</button>
-    <div class="err" id="adminLoginErr"></div>
-    <div style="margin-top:16px;font-size:12px;color:var(--text-light);text-align:center;">
-      默认账号：admin / admin123（请登录后立即修改）
-    </div>
+  <div class="abox">
+    <h2>⚙️ Siver后台管理</h2>
+    <p>Siver家庭点餐系统管理员入口</p>
+    <div class="fg"><label>管理员账号</label><input id="aUser" placeholder="用户名" autocomplete="username"></div>
+    <div class="fg"><label>密码</label><input id="aPass" type="password" placeholder="密码" autocomplete="current-password"></div>
+    <button class="btn btn-primary" style="width:100%;padding:13px;justify-content:center;" onclick="adminLogin()">登 录</button>
+    <div class="err" id="aErr"></div>
+    <div style="margin-top:14px;font-size:12px;color:var(--text-light);text-align:center;">默认账号：admin / admin123（请登录后修改密码）</div>
   </div>
 </div>
 
 <!-- ADMIN APP -->
 <div id="adminApp">
 <div class="layout">
-  <!-- Sidebar -->
   <div class="sidebar">
-    <div class="sidebar-logo">
-      <h1>🍜 家庭点餐</h1>
-      <p>后台管理系统</p>
-    </div>
+    <div class="sidebar-logo"><h1>🍜 Siver家庭点餐</h1><p>后台管理系统</p></div>
     <nav class="sidebar-nav">
-      <div class="nav-item active" onclick="switchSection('dashboard', this)">
-        <span class="nav-item-icon">📊</span> 数据概览
-      </div>
-      <div class="nav-item" onclick="switchSection('menu', this)">
-        <span class="nav-item-icon">🍽️</span> 菜品管理
-      </div>
-      <div class="nav-item" onclick="switchSection('orders', this)">
-        <span class="nav-item-icon">📋</span> 订单管理
-      </div>
-      <div class="nav-item" onclick="switchSection('users', this)">
-        <span class="nav-item-icon">👥</span> 用户管理
-      </div>
+      <div class="nav-item active" onclick="sw('dashboard',this)"><span class="nav-item-icon">📊</span> 数据概览</div>
+      <div class="nav-item" onclick="sw('menu',this)"><span class="nav-item-icon">🍽️</span> 菜品管理</div>
+      <div class="nav-item" onclick="sw('categories',this)"><span class="nav-item-icon">🏷️</span> 分类管理</div>
+      <div class="nav-item" onclick="sw('images',this)"><span class="nav-item-icon">🖼️</span> 图片管理</div>
+      <div class="nav-item" onclick="sw('orders',this)"><span class="nav-item-icon">📋</span> 订单管理</div>
+      <div class="nav-item" onclick="sw('users',this)"><span class="nav-item-icon">👥</span> 用户管理</div>
+      <div class="nav-item" onclick="sw('settings',this)"><span class="nav-item-icon">🔐</span> 账号设置</div>
     </nav>
     <div class="sidebar-footer">
-      <div class="sidebar-user" id="adminUserDisplay">-</div>
+      <div class="sidebar-user" id="aUserDisplay">-</div>
       <div class="sidebar-logout" onclick="adminLogout()">退出登录 →</div>
     </div>
   </div>
 
-  <!-- Main -->
   <div class="main-content">
 
     <!-- DASHBOARD -->
     <div class="section active" id="sec-dashboard">
       <div class="page-header"><h2>📊 数据概览</h2></div>
-      <div class="stats-grid" id="statsGrid">
-        <div class="stat-card"><div class="stat-icon">🍽️</div><div class="stat-val" id="statMenuCount">-</div><div class="stat-label">菜品总数</div></div>
-        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-val" id="statUserCount">-</div><div class="stat-label">注册用户</div></div>
-        <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-val" id="statOrderCount">-</div><div class="stat-label">历史订单数</div></div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-icon">🍽️</div><div class="stat-val" id="sMenu">-</div><div class="stat-label">菜品总数</div></div>
+        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-val" id="sUser">-</div><div class="stat-label">注册用户</div></div>
+        <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-val" id="sOrder">-</div><div class="stat-label">历史订单</div></div>
+        <div class="stat-card"><div class="stat-icon">🖼️</div><div class="stat-val" id="sImg">-</div><div class="stat-label">上传图片</div></div>
       </div>
-      <div class="card">
-        <div class="card-header"><h3>🕐 最近订单</h3></div>
-        <div class="card-body" id="recentOrders"><div class="loading-state">加载中...</div></div>
-      </div>
+      <div class="card"><div class="card-header"><h3>最近订单</h3></div><div class="card-body" id="recentOrders"><div class="empty-state">加载中...</div></div></div>
     </div>
 
-    <!-- MENU MANAGEMENT -->
+    <!-- MENU -->
     <div class="section" id="sec-menu">
-      <div class="page-header">
-        <h2>🍽️ 菜品管理</h2>
-        <button class="btn-primary" onclick="openMenuModal()">＋ 添加菜品</button>
-      </div>
+      <div class="page-header"><h2>🍽️ 菜品管理</h2><button class="btn btn-primary" onclick="openMenuModal()">＋ 添加菜品</button></div>
       <div class="filter-bar">
-        <input type="text" id="menuSearch" placeholder="搜索菜名..." oninput="filterMenu()" style="flex:1;min-width:150px;">
-        <select id="menuCatFilter" onchange="filterMenu()">
-          <option value="">全部分类</option>
-          <option value="素菜">素菜</option>
-          <option value="荤菜">荤菜</option>
-          <option value="汤">汤</option>
-          <option value="饭">饭</option>
-        </select>
+        <input id="menuSearch" placeholder="搜索菜名..." oninput="filterMenu()" style="flex:1;min-width:120px;">
+        <select id="menuCatF" onchange="filterMenu()"><option value="">全部分类</option></select>
       </div>
       <div class="card">
-        <table>
-          <thead><tr><th>图片</th><th>菜名</th><th>分类</th><th>食材</th><th>操作</th></tr></thead>
-          <tbody id="menuTableBody"><tr><td colspan="5" class="loading-state">加载中...</td></tr></tbody>
-        </table>
+        <table><thead><tr><th>图片</th><th>菜名</th><th>分类</th><th>食材（预览）</th><th>操作</th></tr></thead>
+        <tbody id="menuTbody"><tr><td colspan="5"><div class="empty-state">加载中...</div></td></tr></tbody></table>
       </div>
     </div>
 
-    <!-- ORDERS MANAGEMENT -->
+    <!-- CATEGORIES -->
+    <div class="section" id="sec-categories">
+      <div class="page-header"><h2>🏷️ 分类管理</h2></div>
+      <div class="card"><div class="card-header"><h3>当前分类</h3><button class="btn btn-primary btn-sm" onclick="openAddCat()">＋ 新增</button></div>
+      <div class="card-body">
+        <div id="catList" class="cat-chips"></div>
+        <div style="font-size:12px;color:var(--text-light);margin-top:12px;">点击分类名可重命名，点击 × 可删除分类（菜品的分类字段不会自动变更）</div>
+      </div></div>
+    </div>
+
+    <!-- IMAGES -->
+    <div class="section" id="sec-images">
+      <div class="page-header"><h2>🖼️ 图片管理</h2>
+        <label class="btn btn-primary" style="cursor:pointer;">📤 上传图片<input type="file" accept="image/*" style="display:none" onchange="quickUpload(this)"></label>
+      </div>
+      <div class="card"><div class="card-header"><h3 id="imgTotal">图片列表</h3></div>
+      <div class="card-body"><div class="img-grid" id="imgGrid"><div class="empty-state">加载中...</div></div></div></div>
+    </div>
+
+    <!-- ORDERS -->
     <div class="section" id="sec-orders">
       <div class="page-header"><h2>📋 订单管理</h2></div>
       <div class="filter-bar">
-        <select id="orderUserFilter" onchange="loadAdminOrders()">
-          <option value="">全部用户</option>
-        </select>
+        <select id="orderUserF" onchange="loadAdminOrders()"><option value="">全部用户</option></select>
       </div>
       <div class="card">
-        <table>
-          <thead><tr><th>用户</th><th>日期</th><th>餐次</th><th>菜品数</th><th>操作</th></tr></thead>
-          <tbody id="ordersTableBody"><tr><td colspan="5" class="loading-state">加载中...</td></tr></tbody>
-        </table>
-      </div>
+        <table><thead><tr><th>用户</th><th>日期</th><th>餐次</th><th>菜品数</th><th>操作</th></tr></thead>
+        <tbody id="orderTbody"><tr><td colspan="5"><div class="empty-state">加载中...</div></td></tr></tbody>
+      </table></div>
     </div>
 
-    <!-- USER MANAGEMENT -->
+    <!-- USERS -->
     <div class="section" id="sec-users">
-      <div class="page-header">
-        <h2>👥 用户管理</h2>
-        <button class="btn-primary" onclick="openUserModal()">＋ 添加用户</button>
-      </div>
+      <div class="page-header"><h2>👥</h2><button class="btn btn-primary" onclick="openUserModal()">＋ 添加用户</button></div>
       <div class="card">
-        <table>
-          <thead><tr><th>用户名</th><th>创建时间</th><th>操作</th></tr></thead>
-          <tbody id="usersTableBody"><tr><td colspan="3" class="loading-state">加载中...</td></tr></tbody>
-        </table>
+        <table><thead><tr><th>用户名</th><th>创建时间</th><th>操作</th></tr></thead>
+        <tbody id="userTbody"><tr><td colspan="3"><div class="empty-state">加载中...</div></td></tr></tbody>
+      </table></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="section" id="sec-settings">
+      <div class="page-header"><h2>🔐 账号设置</h2></div>
+      <div class="card" style="max-width:440px;">
+        <div class="card-header"><h3>修改管理员密码</h3></div>
+        <div class="card-body">
+          <div class="fg"><label>当前密码</label><input type="password" id="oldPw" placeholder="输入当前密码"></div>
+          <div class="fg"><label>新密码（字母+数字，6-16位）</label><input type="password" id="newPw" placeholder="输入新密码"></div>
+          <div class="fg"><label>确认新密码</label><input type="password" id="newPw2" placeholder="再次输入新密码"></div>
+          <div class="err" id="pwErr"></div>
+          <button class="btn btn-primary" onclick="changeAdminPw()" style="margin-top:8px;">保存修改</button>
+        </div>
       </div>
     </div>
 
@@ -273,42 +232,24 @@ tr:hover td { background: #fafafa; }
 <!-- MENU MODAL -->
 <div class="modal-bg" id="menuModal">
   <div class="modal-box">
-    <h3 id="menuModalTitle">添加菜品</h3>
+    <h3 id="menuModalT">添加菜品</h3>
     <input type="hidden" id="menuEditId">
-    <div class="form-group">
-      <label>分类 *</label>
-      <select id="menuCat">
-        <option value="素菜">素菜</option>
-        <option value="荤菜">荤菜</option>
-        <option value="汤">汤</option>
-        <option value="饭">饭</option>
-      </select>
+    <div class="fg"><label>分类 *</label><select id="menuCat"></select></div>
+    <div class="fg"><label>菜品名称 *</label><input id="menuName" placeholder="如：番茄炒蛋"></div>
+    <div class="fg">
+      <label>图片路径（留空则无图）</label>
+      <input id="menuImage" placeholder="img/xxx.jpg">
+      <div class="hint">或直接上传：</div>
+      <input type="file" accept="image/*" onchange="uploadInModal(this)" style="margin-top:6px;">
+      <div id="uploadStat" style="font-size:12px;color:var(--text-light);margin-top:4px;"></div>
+      <img id="uploadPreview">
     </div>
-    <div class="form-group">
-      <label>菜品名称 *</label>
-      <input type="text" id="menuName" placeholder="如：番茄炒蛋">
-    </div>
-    <div class="form-group">
-      <label>菜品图片路径（如 ./img/tomato-egg.jpg）</label>
-      <input type="text" id="menuImage" placeholder="./img/dish.jpg">
-    </div>
-    <div class="form-group">
-      <label>上传图片</label>
-      <input type="file" id="menuImageFile" accept="image/*" onchange="uploadMenuImage()">
-      <div id="uploadStatus" style="font-size:12px;color:var(--text-light);margin-top:4px;"></div>
-    </div>
-    <div class="form-group">
-      <label>食材</label>
-      <textarea id="menuIngredients" placeholder="如：鸡蛋3个，西红柿2个..."></textarea>
-    </div>
-    <div class="form-group">
-      <label>制作过程</label>
-      <textarea id="menuProcess" placeholder="1. 先做... 2. 再做..." style="min-height:120px;"></textarea>
-    </div>
-    <div id="menuModalErr" class="err"></div>
+    <div class="fg"><label>食材</label><textarea id="menuIngr" placeholder="如：鸡蛋3个，西红柿2个..."></textarea></div>
+    <div class="fg"><label>制作过程</label><textarea id="menuProc" placeholder="1. 先做... 2. 再做..." style="min-height:110px;"></textarea></div>
+    <div class="err" id="menuErr"></div>
     <div class="modal-actions">
-      <button class="btn-primary btn-secondary" onclick="closeMenuModal()">取消</button>
-      <button class="btn-primary" onclick="saveMenu()">保存</button>
+      <button class="btn btn-secondary" onclick="closeMenuModal()">取消</button>
+      <button class="btn btn-primary" onclick="saveMenu()">保存</button>
     </div>
   </div>
 </div>
@@ -316,20 +257,28 @@ tr:hover td { background: #fafafa; }
 <!-- USER MODAL -->
 <div class="modal-bg" id="userModal">
   <div class="modal-box">
-    <h3 id="userModalTitle">添加用户</h3>
+    <h3 id="userModalT">添加用户</h3>
     <input type="hidden" id="userEditName">
-    <div class="form-group" id="userNameGroup">
-      <label>用户名（英文字母开头 + 数字，2-16位）</label>
-      <input type="text" id="userName" placeholder="如：user1" pattern="[a-zA-Z][a-zA-Z0-9]{1,15}">
-    </div>
-    <div class="form-group">
-      <label>密码（字母 + 数字，6-16位）</label>
-      <input type="password" id="userPass" placeholder="至少6位，字母和数字">
-    </div>
-    <div id="userModalErr" class="err"></div>
+    <div class="fg" id="userNameFg"><label>用户名（英文字母开头，字母+数字，2-16位）</label><input id="uName" placeholder="如：user1"></div>
+    <div class="fg"><label>密码（字母+数字，6-16位）</label><input type="password" id="uPass" placeholder="至少6位"></div>
+    <div class="err" id="userErr"></div>
     <div class="modal-actions">
-      <button class="btn-primary btn-secondary" onclick="closeUserModal()">取消</button>
-      <button class="btn-primary" onclick="saveUser()">保存</button>
+      <button class="btn btn-secondary" onclick="closeUserModal()">取消</button>
+      <button class="btn btn-primary" onclick="saveUser()">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD CATEGORY MODAL -->
+<div class="modal-bg" id="catAddModal">
+  <div class="modal-box" style="max-width:360px;">
+    <h3 id="catModalT">新增分类</h3>
+    <input type="hidden" id="catEditOld">
+    <div class="fg"><label>分类名称</label><input id="catName" placeholder="如：凉菜"></div>
+    <div class="err" id="catErr"></div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeCatModal()">取消</button>
+      <button class="btn btn-primary" onclick="saveCat()">保存</button>
     </div>
   </div>
 </div>
@@ -337,439 +286,379 @@ tr:hover td { background: #fafafa; }
 <!-- ORDER DETAIL MODAL -->
 <div class="modal-bg" id="orderDetailModal">
   <div class="modal-box">
-    <h3 id="orderDetailTitle">订单详情</h3>
-    <div id="orderDetailBody"></div>
-    <div class="modal-actions">
-      <button class="btn-primary btn-secondary" onclick="closeOrderDetail()">关闭</button>
-    </div>
+    <h3 id="odTitle">订单详情</h3>
+    <div id="odBody"></div>
+    <div class="modal-actions"><button class="btn btn-secondary" onclick="closeOD()">关闭</button></div>
   </div>
 </div>
 
 <script>
-let adminUser = null;
-let allMenuData = [];
-let allUsersData = [];
-let allOrdersData = [];
-let currentEditOrder = null;
+let adminUser=null, allMenu=[], allUsers=[], allOrders=[], allCats=[];
 
-// ============================================================
-// AUTH
-// ============================================================
-async function adminLogin() {
-  const username = document.getElementById('adminUser').value.trim();
-  const password = document.getElementById('adminPass').value.trim();
-  const err = document.getElementById('adminLoginErr');
-  err.textContent = '';
-
-  try {
-    const res = await fetch('api.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'admin_login', username, password })
-    });
-    const data = await res.json();
-    if (data.success) {
-      adminUser = data.username;
-      document.getElementById('loginPage').style.display = 'none';
-      document.getElementById('adminApp').style.display = 'block';
-      document.getElementById('adminUserDisplay').textContent = '管理员：' + adminUser;
-      initDashboard();
-    } else {
-      err.textContent = data.message;
-    }
-  } catch(e) { err.textContent = '网络错误'; }
+// ===== API =====
+async function apiPost(data){
+  const r=await fetch('api.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+  return r.json();
+}
+async function apiGet(p){
+  const r=await fetch('api.php?'+new URLSearchParams(p).toString());
+  return r.json();
 }
 
-async function adminLogout() {
-  await apiPost({ action: 'admin_logout' });
-  location.reload();
+// ===== AUTH =====
+async function adminLogin(){
+  const u=document.getElementById('aUser').value.trim(),p=document.getElementById('aPass').value.trim();
+  const e=document.getElementById('aErr'); e.textContent='';
+  if(!u||!p){e.textContent='请填写账号和密码';return;}
+  const d=await apiPost({action:'admin_login',username:u,password:p});
+  if(d.success){adminUser=d.username;showAdmin();}
+  else e.textContent=d.message;
+}
+async function adminLogout(){await apiPost({action:'admin_logout'});location.reload();}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('loginPage').style.display!=='none')adminLogin();});
+
+function showAdmin(){
+  document.getElementById('loginPage').style.display='none';
+  document.getElementById('adminApp').style.display='block';
+  document.getElementById('aUserDisplay').textContent='管理员：'+adminUser;
+  initDashboard();
 }
 
-document.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && document.getElementById('loginPage').style.display !== 'none') adminLogin();
-});
-
-// ============================================================
-// API HELPERS
-// ============================================================
-async function apiPost(data) {
-  const res = await fetch('api.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  });
-  return res.json();
+// ===== NAV =====
+function sw(id,el){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  if(el)el.classList.add('active');
+  if(id==='menu'){loadMenuAdmin();loadCatsForFilter();}
+  if(id==='categories'){loadCats();}
+  if(id==='images'){loadImages();}
+  if(id==='orders'){loadAdminUsers();loadAdminOrders();}
+  if(id==='users'){loadUsersAdmin();}
 }
 
-async function apiGet(params) {
-  const qs = new URLSearchParams(params).toString();
-  const res = await fetch('api.php?' + qs);
-  return res.json();
+// ===== DASHBOARD =====
+async function initDashboard(){
+  const[mr,ur,or,ir]=await Promise.all([
+    apiGet({action:'menu_list'}),apiGet({action:'user_list'}),
+    apiGet({action:'order_list'}),apiGet({action:'image_list'})
+  ]);
+  allMenu=mr.data||[]; allUsers=ur.data||[]; allOrders=or.data||[];
+  document.getElementById('sMenu').textContent=allMenu.length;
+  document.getElementById('sUser').textContent=allUsers.length;
+  document.getElementById('sOrder').textContent=allOrders.length;
+  document.getElementById('sImg').textContent=(ir.data||[]).length;
+  const recent=allOrders.slice(0,5);
+  const mn={breakfast:'早餐',lunch:'午餐',dinner:'晚餐'};
+  document.getElementById('recentOrders').innerHTML=recent.length?`
+    <table><thead><tr><th>用户</th><th>日期</th><th>餐次</th></tr></thead><tbody>
+    ${recent.map(o=>`<tr><td><strong>${o.username}</strong></td><td>${fd(o.date)}</td>
+    <td>${Object.keys(o.meals||{}).map(m=>`<span class="meal-tag-${m[0]}">${mn[m]}</span>`).join(' ')}</td></tr>`).join('')}
+    </tbody></table>`:'<div class="empty-state"><div class="icon">📭</div>暂无订单</div>';
 }
+function fd(d){return d?`${d.slice(0,4)}-${d.slice(4,6)}-${d.slice(6,8)}`:''}
 
-// ============================================================
-// NAVIGATION
-// ============================================================
-function switchSection(id, navEl) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('sec-' + id).classList.add('active');
-  if (navEl) navEl.classList.add('active');
-
-  if (id === 'menu') loadMenuAdmin();
-  if (id === 'orders') { loadAdminUsers(); loadAdminOrders(); }
-  if (id === 'users') loadUsersAdmin();
+// ===== MENU =====
+async function loadMenuAdmin(){
+  const r=await apiGet({action:'menu_list'});
+  allMenu=r.data||[];
+  filterMenu();
 }
-
-// ============================================================
-// DASHBOARD
-// ============================================================
-async function initDashboard() {
-  try {
-    const [menuRes, usersRes, ordersRes] = await Promise.all([
-      apiGet({ action: 'menu_list' }),
-      apiGet({ action: 'user_list' }),
-      apiGet({ action: 'order_list' })
-    ]);
-
-    allMenuData = menuRes.data || [];
-    allUsersData = usersRes.data || [];
-    allOrdersData = ordersRes.data || [];
-
-    document.getElementById('statMenuCount').textContent = allMenuData.length;
-    document.getElementById('statUserCount').textContent = allUsersData.length;
-    document.getElementById('statOrderCount').textContent = allOrdersData.length;
-
-    const recent = allOrdersData.slice(0, 5);
-    if (recent.length === 0) {
-      document.getElementById('recentOrders').innerHTML = '<div class="empty-state"><div class="icon">📭</div>暂无订单</div>';
-    } else {
-      const mealNames = { breakfast: '早餐', lunch: '午餐', dinner: '晚餐' };
-      document.getElementById('recentOrders').innerHTML = `
-        <table>
-          <thead><tr><th>用户</th><th>日期</th><th>餐次</th></tr></thead>
-          <tbody>${recent.map(o => `
-            <tr>
-              <td>${o.username}</td>
-              <td>${formatDate(o.date)}</td>
-              <td>${Object.keys(o.meals||{}).map(m => `<span class="meal-tag-${m[0]}">${mealNames[m]||m}</span> `).join('')}</td>
-            </tr>
-          `).join('')}</tbody>
-        </table>`;
-    }
-  } catch(e) { console.error(e); }
+async function loadCatsForFilter(){
+  const r=await apiGet({action:'category_list'});
+  allCats=r.data||[];
+  const sel=document.getElementById('menuCatF');
+  sel.innerHTML='<option value="">全部分类</option>'+allCats.map(c=>`<option value="${c}">${c}</option>`).join('');
 }
-
-function formatDate(d) {
-  return d ? `${d.slice(0,4)}-${d.slice(4,6)}-${d.slice(6,8)}` : '';
+function filterMenu(){
+  const s=document.getElementById('menuSearch').value.toLowerCase();
+  const c=document.getElementById('menuCatF').value;
+  renderMenuTable(allMenu.filter(d=>(!s||d.name.toLowerCase().includes(s))&&(!c||d.category===c)));
 }
-
-// ============================================================
-// MENU MANAGEMENT
-// ============================================================
-async function loadMenuAdmin() {
-  const res = await apiGet({ action: 'menu_list' });
-  allMenuData = res.data || [];
-  renderMenuTable(allMenuData);
+function renderMenuTable(data){
+  const tb=document.getElementById('menuTbody');
+  if(!data.length){tb.innerHTML='<tr><td colspan="5"><div class="empty-state"><div class="icon">🍽️</div>暂无菜品</div></td></tr>';return;}
+  tb.innerHTML=data.map(d=>`<tr>
+    <td>${d.image?`<div class="img-preview"><img src="../${d.image}" onerror="this.parentElement.innerHTML='${ce(d.category)}'"></div>`:`<div class="img-preview">${ce(d.category)}</div>`}</td>
+    <td><strong>${d.name}</strong></td>
+    <td><span class="cat-tag" style="background:var(--primary-light);color:var(--primary)">${d.category}</span></td>
+    <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-light);font-size:12px;">${d.ingredients||'-'}</td>
+    <td><div class="td-actions">
+      <button class="btn btn-primary btn-sm" onclick="openMenuModal(${d.id})">编辑</button>
+      <button class="btn btn-danger btn-sm" onclick="delMenu(${d.id},'${esc(d.name)}')">删除</button>
+    </div></td></tr>`).join('');
 }
+function ce(cat){const m={'素菜':'🥦','荤菜':'🍖','汤':'🥣','饭':'🍚'};return m[cat]||'🍽️';}
+function esc(s){return String(s).replace(/'/g,"\\'")}
 
-function filterMenu() {
-  const search = document.getElementById('menuSearch').value.toLowerCase();
-  const cat = document.getElementById('menuCatFilter').value;
-  const filtered = allMenuData.filter(d =>
-    (!search || d.name.toLowerCase().includes(search)) &&
-    (!cat || d.category === cat)
-  );
-  renderMenuTable(filtered);
-}
-
-function renderMenuTable(data) {
-  const tbody = document.getElementById('menuTableBody');
-  if (!data.length) {
-    tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="icon">🍽️</div>暂无菜品</div></td></tr>';
-    return;
-  }
-  tbody.innerHTML = data.map(d => `
-    <tr>
-      <td>
-        ${d.image
-          ? `<div class="img-preview"><img src="${d.image}" alt="${d.name}" onerror="this.outerHTML='${getCatEmoji(d.category)}'"></div>`
-          : `<div class="img-preview">${getCatEmoji(d.category)}</div>`}
-      </td>
-      <td><strong>${d.name}</strong></td>
-      <td><span class="cat-tag tag-${d.category}">${d.category}</span></td>
-      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-light);font-size:12px;">${d.ingredients||'-'}</td>
-      <td>
-        <div class="td-actions">
-          <button class="btn-primary btn-sm" onclick="openMenuModal(${d.id})">编辑</button>
-          <button class="btn-primary btn-danger btn-sm" onclick="deleteMenu(${d.id},'${escapeHtml(d.name)}')">删除</button>
-        </div>
-      </td>
-    </tr>
-  `).join('');
-}
-
-function getCatEmoji(cat) {
-  const icons = { '素菜': '🥦', '荤菜': '🍖', '汤': '🥣', '饭': '🍚' };
-  return icons[cat] || '🍽️';
-}
-
-function escapeHtml(str) { return String(str).replace(/'/g, "\\'"); }
-
-function openMenuModal(id) {
-  document.getElementById('menuModalErr').textContent = '';
-  if (id) {
-    const dish = allMenuData.find(d => d.id === id);
-    if (!dish) return;
-    document.getElementById('menuModalTitle').textContent = '编辑菜品';
-    document.getElementById('menuEditId').value = id;
-    document.getElementById('menuCat').value = dish.category;
-    document.getElementById('menuName').value = dish.name;
-    document.getElementById('menuImage').value = dish.image || '';
-    document.getElementById('menuIngredients').value = dish.ingredients || '';
-    document.getElementById('menuProcess').value = dish.process || '';
+async function openMenuModal(id){
+  document.getElementById('menuErr').textContent='';
+  document.getElementById('uploadStat').textContent='';
+  document.getElementById('uploadPreview').style.display='none';
+  // Load categories into select
+  const cr=await apiGet({action:'category_list'});
+  allCats=cr.data||[];
+  const sel=document.getElementById('menuCat');
+  sel.innerHTML=allCats.map(c=>`<option value="${c}">${c}</option>`).join('');
+  if(id){
+    const d=allMenu.find(x=>x.id===id);if(!d)return;
+    document.getElementById('menuModalT').textContent='编辑菜品';
+    document.getElementById('menuEditId').value=id;
+    sel.value=d.category;
+    document.getElementById('menuName').value=d.name;
+    document.getElementById('menuImage').value=d.image||'';
+    document.getElementById('menuIngr').value=d.ingredients||'';
+    document.getElementById('menuProc').value=d.process||'';
+    if(d.image){const p=document.getElementById('uploadPreview');p.src='../'+d.image;p.style.display='block';}
   } else {
-    document.getElementById('menuModalTitle').textContent = '添加菜品';
-    document.getElementById('menuEditId').value = '';
-    document.getElementById('menuCat').value = '素菜';
-    document.getElementById('menuName').value = '';
-    document.getElementById('menuImage').value = '';
-    document.getElementById('menuIngredients').value = '';
-    document.getElementById('menuProcess').value = '';
+    document.getElementById('menuModalT').textContent='添加菜品';
+    document.getElementById('menuEditId').value='';
+    document.getElementById('menuName').value='';
+    document.getElementById('menuImage').value='';
+    document.getElementById('menuIngr').value='';
+    document.getElementById('menuProc').value='';
   }
   document.getElementById('menuModal').classList.add('open');
 }
+function closeMenuModal(){document.getElementById('menuModal').classList.remove('open');}
 
-function closeMenuModal() { document.getElementById('menuModal').classList.remove('open'); }
-
-async function uploadMenuImage() {
-  const file = document.getElementById('menuImageFile').files[0];
-  if (!file) return;
-  const statusEl = document.getElementById('uploadStatus');
-  statusEl.textContent = '上传中...';
-
-  const formData = new FormData();
-  formData.append('action', 'upload_image');
-  formData.append('image', file);
-
-  try {
-    const res = await fetch('api.php?action=upload_image', { method: 'POST', body: formData });
-    const data = await res.json();
-    if (data.success) {
-      document.getElementById('menuImage').value = data.path;
-      statusEl.textContent = '✅ 上传成功：' + data.path;
-    } else {
-      statusEl.textContent = '❌ ' + data.message;
-    }
-  } catch(e) { statusEl.textContent = '❌ 上传失败'; }
+async function uploadInModal(input){
+  const file=input.files[0];if(!file)return;
+  const stat=document.getElementById('uploadStat');
+  stat.textContent='上传中...';
+  const fd=new FormData();fd.append('image',file);
+  const r=await fetch('api.php?action=upload_image',{method:'POST',body:fd});
+  const d=await r.json();
+  if(d.success){
+    document.getElementById('menuImage').value=d.path;
+    stat.textContent='✅ 上传成功：'+d.path;
+    const p=document.getElementById('uploadPreview');p.src='../'+d.path;p.style.display='block';
+  } else {stat.textContent='❌ '+d.message;}
 }
 
-async function saveMenu() {
-  const id = document.getElementById('menuEditId').value;
-  const err = document.getElementById('menuModalErr');
-  err.textContent = '';
-
-  const payload = {
-    action: id ? 'menu_update' : 'menu_add',
-    id: id ? parseInt(id) : undefined,
-    category: document.getElementById('menuCat').value,
-    name: document.getElementById('menuName').value.trim(),
-    image: document.getElementById('menuImage').value.trim(),
-    ingredients: document.getElementById('menuIngredients').value.trim(),
-    process: document.getElementById('menuProcess').value.trim()
+async function saveMenu(){
+  const id=document.getElementById('menuEditId').value;
+  const err=document.getElementById('menuErr');err.textContent='';
+  const payload={
+    action:id?'menu_update':'menu_add',
+    id:id?parseInt(id):undefined,
+    category:document.getElementById('menuCat').value,
+    name:document.getElementById('menuName').value.trim(),
+    image:document.getElementById('menuImage').value.trim(),
+    ingredients:document.getElementById('menuIngr').value.trim(),
+    process:document.getElementById('menuProc').value.trim()
   };
-
-  const res = await apiPost(payload);
-  if (res.success) {
-    closeMenuModal();
-    loadMenuAdmin();
-  } else {
-    err.textContent = res.message;
-  }
+  const r=await apiPost(payload);
+  if(r.success){closeMenuModal();loadMenuAdmin();}
+  else err.textContent=r.message;
+}
+async function delMenu(id,name){
+  if(!confirm(`确定删除菜品「${name}」吗？`))return;
+  const r=await apiPost({action:'menu_delete',id});
+  if(r.success)loadMenuAdmin();else alert('删除失败：'+r.message);
 }
 
-async function deleteMenu(id, name) {
-  if (!confirm(`确定要删除菜品「${name}」吗？`)) return;
-  const res = await apiPost({ action: 'menu_delete', id });
-  if (res.success) loadMenuAdmin();
-  else alert('删除失败：' + res.message);
+// ===== CATEGORIES =====
+async function loadCats(){
+  const r=await apiGet({action:'category_list'});
+  allCats=r.data||[];
+  renderCats();
+}
+function renderCats(){
+  document.getElementById('catList').innerHTML=allCats.map(c=>`
+    <div class="cat-chip">
+      <span onclick="openRenameCat('${esc(c)}')" style="cursor:pointer;" title="点击重命名">${c}</span>
+      <span class="del-chip" onclick="deleteCat('${esc(c)}')" title="删除">×</span>
+    </div>`).join('');
+}
+function openAddCat(){
+  document.getElementById('catModalT').textContent='新增分类';
+  document.getElementById('catEditOld').value='';
+  document.getElementById('catName').value='';
+  document.getElementById('catErr').textContent='';
+  document.getElementById('catAddModal').classList.add('open');
+}
+function openRenameCat(name){
+  document.getElementById('catModalT').textContent='重命名分类：'+name;
+  document.getElementById('catEditOld').value=name;
+  document.getElementById('catName').value=name;
+  document.getElementById('catErr').textContent='';
+  document.getElementById('catAddModal').classList.add('open');
+}
+function closeCatModal(){document.getElementById('catAddModal').classList.remove('open');}
+async function saveCat(){
+  const old=document.getElementById('catEditOld').value;
+  const name=document.getElementById('catName').value.trim();
+  const err=document.getElementById('catErr');err.textContent='';
+  if(!name){err.textContent='分类名不能为空';return;}
+  let r;
+  if(old){r=await apiPost({action:'category_rename',old_name:old,new_name:name});}
+  else{r=await apiPost({action:'category_add',name});}
+  if(r.success){closeCatModal();loadCats();}else err.textContent=r.message;
+}
+async function deleteCat(name){
+  if(!confirm(`确定删除分类「${name}」吗？\n注意：菜品中使用此分类的字段不会自动清除。`))return;
+  const r=await apiPost({action:'category_delete',name});
+  if(r.success)loadCats();else alert(r.message);
 }
 
-// ============================================================
-// ORDER MANAGEMENT
-// ============================================================
-async function loadAdminUsers() {
-  const res = await apiGet({ action: 'user_list' });
-  const users = res.data || [];
-  const sel = document.getElementById('orderUserFilter');
-  sel.innerHTML = '<option value="">全部用户</option>' +
-    users.map(u => `<option value="${u.username}">${u.username}</option>`).join('');
+// ===== IMAGES =====
+async function loadImages(){
+  const r=await apiGet({action:'image_list'});
+  const imgs=r.data||[];
+  document.getElementById('imgTotal').textContent=`图片列表（共 ${imgs.length} 张）`;
+  const grid=document.getElementById('imgGrid');
+  if(!imgs.length){grid.innerHTML='<div class="empty-state"><div class="icon">🖼️</div>暂无图片</div>';return;}
+  grid.innerHTML=imgs.map(img=>`
+    <div class="img-card">
+      <img src="../${img.path}" onerror="this.src=''" alt="${img.name}">
+      <div class="img-card-info">
+        <div class="img-card-name">${img.name}</div>
+        <div class="img-card-actions">
+          <button class="btn btn-xs btn-secondary" onclick="copyPath('${img.path}')">复制路径</button>
+          <button class="btn btn-xs btn-danger" onclick="deleteImg('${esc(img.name)}')">删除</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+async function quickUpload(input){
+  const file=input.files[0];if(!file)return;
+  const fd=new FormData();fd.append('image',file);
+  const r=await fetch('api.php?action=upload_image',{method:'POST',body:fd});
+  const d=await r.json();
+  if(d.success){alert('✅ 上传成功：'+d.path);loadImages();}
+  else alert('❌ 上传失败：'+d.message);
+  input.value='';
+}
+async function deleteImg(name){
+  if(!confirm(`确定删除图片「${name}」吗？`))return;
+  const r=await apiPost({action:'image_delete',name});
+  if(r.success)loadImages();else alert(r.message);
+}
+function copyPath(path){
+  navigator.clipboard.writeText(path).then(()=>alert('路径已复制：'+path)).catch(()=>prompt('路径：',path));
 }
 
-async function loadAdminOrders() {
-  const userFilter = document.getElementById('orderUserFilter').value;
-  const params = { action: 'order_list' };
-  if (userFilter) params.username = userFilter;
-
-  const res = await apiGet(params);
-  allOrdersData = res.data || [];
-  renderOrdersTable(allOrdersData);
+// ===== ORDERS =====
+async function loadAdminUsers(){
+  const r=await apiGet({action:'user_list'});
+  const sel=document.getElementById('orderUserF');
+  sel.innerHTML='<option value="">全部用户</option>'+(r.data||[]).map(u=>`<option value="${u.username}">${u.username}</option>`).join('');
 }
-
-function renderOrdersTable(data) {
-  const mealNames = { breakfast: '早餐', lunch: '午餐', dinner: '晚餐' };
-  const mealClasses = { breakfast: 'b', lunch: 'l', dinner: 'd' };
-  const tbody = document.getElementById('ordersTableBody');
-
-  if (!data.length) {
-    tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="icon">📭</div>暂无订单</div></td></tr>';
-    return;
-  }
-
-  tbody.innerHTML = data.map(o => {
-    const totalItems = Object.values(o.meals||{}).reduce((a, m) => a + (m.items?.length || 0), 0);
-    const mealTags = Object.keys(o.meals||{}).map(m => `<span class="meal-tag-${mealClasses[m]||'l'}">${mealNames[m]||m}</span>`).join(' ');
-    return `
-      <tr>
-        <td><strong>${o.username}</strong></td>
-        <td>${formatDate(o.date)}</td>
-        <td>${mealTags}</td>
-        <td><span class="badge badge-count">${totalItems} 道</span></td>
-        <td>
-          <div class="td-actions">
-            <button class="btn-primary btn-sm" onclick="viewOrderDetail('${o.username}','${o.date}')">查看</button>
-            <button class="btn-primary btn-danger btn-sm" onclick="deleteOrder('${o.username}','${o.date}')">删除</button>
-          </div>
-        </td>
-      </tr>
-    `;
+async function loadAdminOrders(){
+  const uf=document.getElementById('orderUserF').value;
+  const p={action:'order_list'};if(uf)p.username=uf;
+  const r=await apiGet(p);
+  allOrders=r.data||[];
+  const mn={breakfast:'早餐',lunch:'午餐',dinner:'晚餐'};
+  const mc={breakfast:'b',lunch:'l',dinner:'d'};
+  const tb=document.getElementById('orderTbody');
+  if(!allOrders.length){tb.innerHTML='<tr><td colspan="5"><div class="empty-state"><div class="icon">📭</div>暂无订单</div></td></tr>';return;}
+  tb.innerHTML=allOrders.map(o=>{
+    const total=Object.values(o.meals||{}).reduce((a,m)=>a+(m.items?.length||0),0);
+    const tags=Object.keys(o.meals||{}).map(m=>`<span class="meal-tag-${mc[m]||'l'}">${mn[m]||m}</span>`).join(' ');
+    return `<tr><td><strong>${o.username}</strong></td><td>${fd(o.date)}</td><td>${tags}</td>
+    <td><span class="badge badge-count">${total}道</span></td>
+    <td><div class="td-actions">
+      <button class="btn btn-primary btn-sm" onclick="viewOrder('${o.username}','${o.date}')">查看</button>
+      <button class="btn btn-danger btn-sm" onclick="delOrder('${o.username}','${o.date}')">删除</button>
+    </div></td></tr>`;
   }).join('');
 }
-
-async function viewOrderDetail(username, date) {
-  const res = await fetch(`../api/order.php?action=detail&date=${date}`, { credentials: 'include' });
-  // We need admin access - let's read from admin API
-  const allOrders = allOrdersData;
-  const order = allOrders.find(o => o.username === username && o.date === date);
-  if (!order) { alert('订单不存在'); return; }
-
-  const mealNames = { breakfast: '早餐', lunch: '午餐', dinner: '晚餐' };
-  const mealEmojis = { breakfast: '🌅', lunch: '☀️', dinner: '🌙' };
-  let html = '';
-
-  ['breakfast','lunch','dinner'].forEach(meal => {
-    if (!order.meals[meal]) return;
-    const items = order.meals[meal].items || [];
-    const time = order.meals[meal].time || '';
-    html += `<div style="margin-bottom:16px;">
-      <div style="font-weight:700;margin-bottom:8px;">${mealEmojis[meal]} ${mealNames[meal]}${time ? ' · ' + time : ''}</div>
+function viewOrder(username,date){
+  const o=allOrders.find(x=>x.username===username&&x.date===date);
+  if(!o){alert('订单不存在');return;}
+  const mn={breakfast:'早餐',lunch:'午餐',dinner:'晚餐'};
+  const me={breakfast:'🌅',lunch:'☀️',dinner:'🌙'};
+  let html='';
+  ['breakfast','lunch','dinner'].forEach(meal=>{
+    if(!o.meals[meal])return;
+    const items=o.meals[meal].items||[];
+    const t=o.meals[meal].time||'';
+    html+=`<div style="margin-bottom:16px;">
+      <div style="font-weight:700;margin-bottom:8px;">${me[meal]} ${mn[meal]}${t?' · '+t:''}</div>
       <table style="width:100%"><thead><tr><th>菜品</th><th>数量</th></tr></thead>
-      <tbody>${items.map(i => `<tr><td>${i.name}</td><td>×${i.count}</td></tr>`).join('')}</tbody>
-      </table>
+      <tbody>${items.map(i=>`<tr><td>${i.name}</td><td>×${i.count}</td></tr>`).join('')}</tbody></table>
     </div>`;
   });
-
-  document.getElementById('orderDetailTitle').textContent = `${username} · ${formatDate(date)} 订单`;
-  document.getElementById('orderDetailBody').innerHTML = html || '<p style="color:var(--text-light)">无数据</p>';
+  document.getElementById('odTitle').textContent=`${username} · ${fd(date)}`;
+  document.getElementById('odBody').innerHTML=html||'<p style="color:var(--text-light)">无数据</p>';
   document.getElementById('orderDetailModal').classList.add('open');
 }
-
-function closeOrderDetail() { document.getElementById('orderDetailModal').classList.remove('open'); }
-
-async function deleteOrder(username, date) {
-  if (!confirm(`确定删除 ${username} 在 ${formatDate(date)} 的订单吗？`)) return;
-  const res = await apiPost({ action: 'order_delete', username, date });
-  if (res.success) loadAdminOrders();
-  else alert('删除失败：' + res.message);
+function closeOD(){document.getElementById('orderDetailModal').classList.remove('open');}
+async function delOrder(username,date){
+  if(!confirm(`确定删除 ${username} 在 ${fd(date)} 的全部订单吗？`))return;
+  const r=await apiPost({action:'order_delete',username,date});
+  if(r.success)loadAdminOrders();else alert(r.message);
 }
 
-// ============================================================
-// USER MANAGEMENT
-// ============================================================
-async function loadUsersAdmin() {
-  const res = await apiGet({ action: 'user_list' });
-  allUsersData = res.data || [];
-  renderUsersTable(allUsersData);
+// ===== USERS =====
+async function loadUsersAdmin(){
+  const r=await apiGet({action:'user_list'});
+  allUsers=r.data||[];
+  const tb=document.getElementById('userTbody');
+  if(!allUsers.length){tb.innerHTML='<tr><td colspan="3"><div class="empty-state"><div class="icon">👥</div>暂无用户</div></td></tr>';return;}
+  tb.innerHTML=allUsers.map(u=>`<tr>
+    <td><strong>${u.username}</strong></td><td>${u.created}</td>
+    <td><div class="td-actions">
+      <button class="btn btn-warn btn-sm" onclick="openUserModal('${u.username}')">改密码</button>
+      <button class="btn btn-danger btn-sm" onclick="delUser('${u.username}')">删除</button>
+    </div></td></tr>`).join('');
 }
-
-function renderUsersTable(data) {
-  const tbody = document.getElementById('usersTableBody');
-  if (!data.length) {
-    tbody.innerHTML = '<tr><td colspan="3"><div class="empty-state"><div class="icon">👥</div>暂无用户</div></td></tr>';
-    return;
-  }
-  tbody.innerHTML = data.map(u => `
-    <tr>
-      <td><strong>${u.username}</strong></td>
-      <td>${u.created}</td>
-      <td>
-        <div class="td-actions">
-          <button class="btn-primary btn-sm" onclick="openUserModal('${u.username}')">改密码</button>
-          <button class="btn-primary btn-danger btn-sm" onclick="deleteUser('${u.username}')">删除</button>
-        </div>
-      </td>
-    </tr>
-  `).join('');
-}
-
-function openUserModal(username) {
-  document.getElementById('userModalErr').textContent = '';
-  document.getElementById('userPass').value = '';
-  if (username) {
-    document.getElementById('userModalTitle').textContent = '修改密码：' + username;
-    document.getElementById('userEditName').value = username;
-    document.getElementById('userNameGroup').style.display = 'none';
-    document.getElementById('userName').value = username;
+function openUserModal(username){
+  document.getElementById('userErr').textContent='';
+  document.getElementById('uPass').value='';
+  if(username){
+    document.getElementById('userModalT').textContent='修改密码：'+username;
+    document.getElementById('userEditName').value=username;
+    document.getElementById('userNameFg').style.display='none';
+    document.getElementById('uName').value=username;
   } else {
-    document.getElementById('userModalTitle').textContent = '添加用户';
-    document.getElementById('userEditName').value = '';
-    document.getElementById('userNameGroup').style.display = 'block';
-    document.getElementById('userName').value = '';
+    document.getElementById('userModalT').textContent='添加用户';
+    document.getElementById('userEditName').value='';
+    document.getElementById('userNameFg').style.display='block';
+    document.getElementById('uName').value='';
   }
   document.getElementById('userModal').classList.add('open');
 }
-
-function closeUserModal() { document.getElementById('userModal').classList.remove('open'); }
-
-async function saveUser() {
-  const existingName = document.getElementById('userEditName').value;
-  const username = document.getElementById('userName').value.trim();
-  const password = document.getElementById('userPass').value.trim();
-  const err = document.getElementById('userModalErr');
-  err.textContent = '';
-
-  if (existingName) {
-    // Update password
-    const res = await apiPost({ action: 'user_update_password', username: existingName, password });
-    if (res.success) { closeUserModal(); loadUsersAdmin(); }
-    else { err.textContent = res.message; }
+function closeUserModal(){document.getElementById('userModal').classList.remove('open');}
+async function saveUser(){
+  const existing=document.getElementById('userEditName').value;
+  const username=document.getElementById('uName').value.trim();
+  const password=document.getElementById('uPass').value.trim();
+  const err=document.getElementById('userErr');err.textContent='';
+  if(existing){
+    const r=await apiPost({action:'user_update_password',username:existing,password});
+    if(r.success){closeUserModal();loadUsersAdmin();}else err.textContent=r.message;
   } else {
-    // Add user
-    const res = await apiPost({ action: 'user_add', username, password });
-    if (res.success) { closeUserModal(); loadUsersAdmin(); }
-    else { err.textContent = res.message; }
+    const r=await apiPost({action:'user_add',username,password});
+    if(r.success){closeUserModal();loadUsersAdmin();}else err.textContent=r.message;
   }
 }
-
-async function deleteUser(username) {
-  if (!confirm(`确定要删除用户「${username}」吗？\n注意：该用户的订单数据不会被删除。`)) return;
-  const res = await apiPost({ action: 'user_delete', username });
-  if (res.success) loadUsersAdmin();
-  else alert('删除失败：' + res.message);
+async function delUser(username){
+  if(!confirm(`确定删除用户「${username}」吗？`))return;
+  const r=await apiPost({action:'user_delete',username});
+  if(r.success)loadUsersAdmin();else alert(r.message);
 }
 
-// ============================================================
-// Check session on load
-// ============================================================
-(async () => {
-  const res = await apiGet({ action: 'admin_session' });
-  if (res.logged_in) {
-    adminUser = res.username;
-    document.getElementById('loginPage').style.display = 'none';
-    document.getElementById('adminApp').style.display = 'block';
-    document.getElementById('adminUserDisplay').textContent = '管理员：' + adminUser;
-    initDashboard();
-  }
+// ===== SETTINGS =====
+async function changeAdminPw(){
+  const old=document.getElementById('oldPw').value;
+  const nw=document.getElementById('newPw').value;
+  const nw2=document.getElementById('newPw2').value;
+  const err=document.getElementById('pwErr');err.textContent='';
+  if(nw!==nw2){err.textContent='两次密码不一致';return;}
+  const r=await apiPost({action:'admin_update_password',old_password:old,new_password:nw});
+  if(r.success){err.style.color='green';err.textContent='✅ 密码修改成功';
+    document.getElementById('oldPw').value='';document.getElementById('newPw').value='';document.getElementById('newPw2').value='';
+    setTimeout(()=>{err.textContent='';err.style.color='';},3000);
+  } else {err.style.color='var(--primary)';err.textContent=r.message;}
+}
+
+// ===== INIT =====
+(async()=>{
+  const r=await apiGet({action:'admin_session'});
+  if(r.logged_in){adminUser=r.username;showAdmin();}
 })();
 </script>
 </body>

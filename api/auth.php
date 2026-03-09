@@ -8,6 +8,9 @@ define('RESTAURANT_APP', true);
 function start_session() {
     if (session_status() === PHP_SESSION_NONE) {
         session_name('RESTAURANT_SID');
+        $lifetime = 1 * 24 * 3600; // 7天
+        ini_set('session.gc_maxlifetime', $lifetime);
+        ini_set('session.cookie_lifetime', $lifetime);
         session_start();
     }
 }

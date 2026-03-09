@@ -1,106 +1,189 @@
-# 家庭点餐系统 - 部署说明
+# 🍜 家庭点餐系统
+
+一个专为家庭使用设计的在线点餐系统，支持多用户登录、菜品管理、历史订单查询等功能。
+
+---
 
 ## 目录结构
 
 ```
-./
-├── index.html            ← 前台点餐页面（入口）
-├── .htaccess             ← Apache 安全配置
+ordering/                       ← 网站根目录（可自定义）
+├── index.html                  ← 前台点餐页面（SPA）
 ├── data/
-│   ├── menu.json         ← 菜单数据（46道菜）
-│   └── order/            ← 订单数据（按用户分目录）
-│       └── admin1/       ← 用户 admin1 的订单目录
-│           └── 20260309.json
-├── img/                  ← 菜品图片目录（自行上传）
-├── api/                  ← 前台 PHP API
-│   ├── auth.php          ← 认证公共函数
-│   ├── login.php         ← 用户登录
-│   ← logout.php          ← 退出
-│   ├── session.php       ← 会话检查
-│   ├── menu.php          ← 获取菜单
-│   └── order.php         ← 订单管理
-└── admin/                ← 后台管理
-    ├── index.html        ← 后台管理页面
-    ├── api.php           ← 后台 CRUD API
-    ├── user.php          ← 用户账号数据（受保护）
-    ├── admin.php         ← 管理员账号数据（受保护）
-    └── .htaccess         ← 保护 user.php 和 admin.php
+│   ├── menu.json               ← 菜品数据
+│   ├── categories.json         ← 分类数据（首次使用后自动生成）
+│   └── order/
+│       └── {用户名}/           ← 每个用户的订单目录
+│           └── YYYYMMDD.json   ← 按日期存储的订单文件
+├── img/                        ← 菜品图片目录
+├── api/
+│   ├── auth.php                ← 公共认证函数库
+│   ├── login.php               ← 前台登录
+│   ├── logout.php              ← 前台退出
+│   ├── session.php             ← 会话检查
+│   ├── menu.php                ← 菜单接口
+│   └── order.php               ← 订单接口
+└── admin/
+    ├── index.html              ← 后台管理页面（SPA）
+    ├── api.php                 ← 后台所有接口
+    ├── user.php                ← 前台用户数据（受保护）
+    └── admin.php               ← 后台管理员数据（受保护）
 ```
+
+---
 
 ## 部署要求
 
-- PHP 7.4+（需开启 sessions）
-- Apache 或 Nginx Web 服务器
-- 需要对以下目录有写权限：
-  - `./data/` 及其子目录
-  - `./admin/` （更新用户数据时）
-  - `./img/` （上传图片时）
+- PHP 7.4 或以上（已在 PHP 8.0 测试通过）
+- Apache 或 Nginx + PHP-FPM
+- 以下目录需要 **可读可写** 权限：`data/`、`admin/`、`img/`
 
-## 快速开始
+### 宝塔面板部署步骤
 
-1. **部署文件**：将整个目录上传至 Web 服务器根目录
-2. **设置权限**：
-   ```bash
-   chmod 755 data/ data/order/ admin/ img/
-   chmod 644 data/menu.json admin/user.php admin/admin.php
-   ```
-3. **访问前台**：打开 `http://你的域名/`
-4. **默认用户账号**：`admin1` / `admin123`
-5. **访问后台**：打开 `http://你的域名/admin`
-6. **默认管理员账号**：`admin` / `admin123`
+1. 新建网站，绑定域名
+2. 将所有文件上传至网站目录下的子目录（如 `ordering/`）
+3. 在宝塔终端执行权限命令：
 
-## ⚠️ 安全注意事项
+```bash
+# 将路径替换为实际网站目录
+cd /www/wwwroot/你的域名/ordering
 
-- **立即修改默认密码**！在后台用户管理和管理员设置中修改。
-- `admin/user.php` 和 `admin/admin.php` 已通过 `.htaccess` 阻止直接 HTTP 访问
-- 密码使用 SHA256 + 固定盐值哈希存储（可在 `api/auth.php` 中修改 `PASS_SALT` 常量）
+chown -R www:www data/ admin/ img/
+chmod -R 755 data/ admin/ img/
+```
+
+4. 访问 `http://你的域名/ordering/` 即可使用
+
+### Nginx 额外配置
+
+宝塔 Nginx 环境需在网站配置中添加以下规则，防止直接访问敏感文件：
+
+```nginx
+# 禁止直接访问用户/管理员数据文件
+location ~ ^/ordering/admin/(user|admin)\.php$ {
+    deny all;
+    return 403;
+}
+# 禁止直接访问 data 目录
+location ~ ^/ordering/data/ {
+    deny all;
+    return 403;
+}
+```
+
+---
+
+## 默认账号
+
+| 角色 | 账号 | 密码 | 入口 |
+|------|------|------|------|
+| 前台用户 | `admin1` | `123456` | `/ordering/` |
+| 后台管理员 | `admin` | `123456` | `/ordering/admin/` |
+
+> **部署后请立即在后台修改管理员密码！**（后台 → 账号设置）
+
+---
 
 ## 功能说明
 
-### 前台（index.html）
-- **登录**：多用户支持，各自独立的订单数据
-- **点菜**：按分类浏览，支持搜索，一键添加/删除购物车
-- **随机出菜**：可指定数量和排除历史天数，自动按荤素汤配比
-- **结算**：选择早/中/晚餐，生成订单
-- **历史订单**：分页加载，点击查看详情
+### 前台（用户端）
 
-### 后台（/admin）
-- **菜品管理**：增删改查，支持上传图片
-- **订单管理**：查看所有用户订单，可按用户过滤，支持删除
-- **用户管理**：添加/修改密码/删除用户
+| 功能 | 说明 |
+|------|------|
+| 登录 / 退出 | Session 有效期 7 天，关闭浏览器不会退出 |
+| 浏览菜单 | 左侧分类导航 + 右侧菜品卡片，点击菜品查看食材和制作过程 |
+| 搜索菜品 | 点击右上角 🔍，实时搜索菜名和食材，关键词高亮 |
+| 购物车 | 点击底部购物车栏弹出已选菜品，可加减，点「去结算」进入结算 |
+| 结算下单 | 可选早/中/晚餐，点击时间可手动修改为任意时间（支持补录历史） |
+| 随机出菜 | 可指定数量（1-4道）和排除天数（避免近期重复），自动加入购物车 |
+| 历史订单 | 按日期分页展示，点击查看每餐详情，支持滚动加载 |
 
-### 用户名/密码规则
-- 用户名：英文字母开头，只含字母和数字，2-16位
-- 密码：只含字母和数字，6-16位
+### 后台（管理员端）
 
-## Nginx 配置参考
+| 模块 | 功能 |
+|------|------|
+| 数据概览 | 菜品数、用户数、订单数、图片数统计，显示最近订单 |
+| 菜品管理 | 增删改查，按名称/分类筛选，支持上传图片 |
+| 分类管理 | 新增、重命名、删除分类；重命名时自动同步所有菜品 |
+| 图片管理 | 查看已上传图片，一键复制路径，删除无用图片 |
+| 订单管理 | 查看所有用户订单，按用户筛选，可删除整天或单餐 |
+| 用户管理 | 新增用户、修改密码、删除用户 |
+| 账号设置 | 修改当前管理员密码 |
 
-```nginx
-server {
-    root /var/www/restaurant;
-    index index.html;
-    
-    # 保护敏感 PHP 文件
-    location ~* /admin/(user|admin)\.php$ {
-        deny all;
-        return 403;
-    }
-    
-    # 保护 data 目录
-    location /data/ {
-        deny all;
-        return 403;
-    }
-    
-    location / {
-        try_files $uri $uri/ =404;
-    }
-    
-    location ~ \.php$ {
-        fastcgi_pass unix:/var/run/php/php-fpm.sock;
-        fastcgi_index index.php;
-        include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-    }
+---
+
+## 图片上传说明
+
+- 支持格式：JPG、PNG、GIF、WEBP
+- 单张限制：5MB 以内
+- 图片存储在 `img/` 目录
+- 菜品图片路径示例：`img/20240101_120000_abc123.jpg`
+- 前台引用时使用相对于网站根目录的路径，无需加 `../`
+
+> 若上传失败，请确认 `img/` 目录存在且有写入权限，同时确认 PHP 配置中 `upload_max_filesize` 和 `post_max_size` 不小于 5MB。
+
+---
+
+## 订单数据格式
+
+每个用户的订单按日期存储为 JSON 文件，路径为 `data/order/{用户名}/YYYYMMDD.json`：
+
+```json
+{
+  "lunch": {
+    "items": [
+      { "id": 1, "name": "番茄炒蛋", "category": "荤菜", "image": "", "count": 1 },
+      { "id": 5, "name": "清炒青菜", "category": "素菜", "image": "", "count": 1 }
+    ],
+    "time": "12:05:00",
+    "count": 2
+  },
+  "dinner": {
+    "items": [
+      { "id": 12, "name": "红烧鲈鱼", "category": "荤菜", "image": "", "count": 1 }
+    ],
+    "time": "18:30:00",
+    "count": 1
+  }
 }
 ```
+
+同一天同一餐次重复下单会**覆盖**，不同餐次**共存**于同一文件。
+
+---
+
+## 密码安全
+
+密码使用 SHA-256 + 固定盐值哈希存储：
+
+```
+hash = SHA256(密码明文 + "restaurant_salt_key_2026")
+```
+
+如需手动重置密码，可用以下 PHP 代码生成哈希值：
+
+```php
+echo hash('sha256', '你的新密码' . 'restaurant_salt_key_2026');
+```
+
+将生成的哈希值替换 `admin/user.php` 或 `admin/admin.php` 中对应账号的 `password` 字段。
+
+---
+
+## 常见问题
+
+**Q：登录后显示网络错误？**  
+A：确认网站部署在子目录时，PHP 文件能正常被解析。可上传 `check.php` 诊断工具排查。
+
+**Q：图片上传失败？**  
+A：检查 `img/` 目录权限，以及 PHP 的 `upload_max_filesize` 配置。可上传 `upload_test.php` 诊断工具查看详细错误。
+
+**Q：添加用户后无法登录？**  
+A：用户名只支持英文字母开头，字母+数字组合，2-16位；密码只支持字母+数字，6-16位。
+
+**Q：部署在子目录后404？**  
+A：确认 `index.html` 和 `admin/index.html` 中所有 API 请求使用的是**相对路径**（`api/login.php` 而非 `/api/login.php`）。
+
+---
+
+*最后更新：2026年3月*
