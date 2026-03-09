@@ -747,13 +747,13 @@ function getCategories() {
 }
 
 function getCatIcon(cat) {
-  const icons = { '素菜': '🥦', '荤菜': '🍖', '汤': '🥣', '饭': '🍚' };
+  const icons = { '素菜': '🥦', '荤菜': '🍖', '汤': '🥣', '饭': '🍚', '厨师': '👨‍🍳' };
   return icons[cat] || '🍽️';
 }
 
 function getDishIcon(dish) {
   const icons = {
-    '素菜': '🥬', '荤菜': '🥩', '汤': '🥣', '饭': '🍚'
+    '素菜': '🥬', '荤菜': '🥩', '汤': '🥣', '饭': '🍚', '厨师': '👨‍🍳'
   };
   return icons[dish.category] || '🍽️';
 }
@@ -1324,7 +1324,7 @@ function renderOrderCard(order) {
 }
 
 function getCategoryIcon(cat) {
-  const icons = { '素菜': '🥦', '荤菜': '🍖', '汤': '🥣', '饭': '🍚' };
+  const icons = { '素菜': '🥦', '荤菜': '🍖', '汤': '🥣', '饭': '🍚', '厨师': '👨‍🍳'};
   return icons[cat] || '🍽️';
 }
 
