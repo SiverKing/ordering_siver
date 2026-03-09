@@ -1,0 +1,10 @@
+# 保护敏感文件，禁止直接HTTP访问 user.php 和 admin.php
+<Files "user.php">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "admin.php">
+    Order allow,deny
+    Deny from all
+</Files>

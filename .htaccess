@@ -1,0 +1,25 @@
+Options -Indexes
+ServerSignature Off
+
+# 保护 data 目录
+<DirectoryMatch "^.*/data/">
+    Order allow,deny
+    Deny from all
+</DirectoryMatch>
+
+# 允许 API 访问
+<FilesMatch "\.(php)$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
+
+# 阻止直接访问 .htaccess 文件
+<Files ".htaccess">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# 启用 mod_rewrite
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+</IfModule>
