@@ -1037,23 +1037,36 @@ async function doRandomSelect() {
   const days = parseInt(document.querySelector('#randDaysChips .opt-chip.selected')?.dataset.val || '0');
 
   let excluded = [];
+
   if (days > 0) {
     try {
       const res = await fetch(`api/order.php?action=history_dates&days=${days}`);
       const data = await res.json();
-      excluded = data.dishes || [];
-    } catch(e) {}
+
+      excluded = Array.isArray(data.dishes)
+        ? data.dishes
+        : Object.values(data.dishes || []);
+
+    } catch(e) {
+      excluded = [];
+    }
   }
 
-  // Filter out excluded dishes
   const available = menuData.filter(d => !excluded.includes(d.name));
-  if (available.length === 0) { showToast('没有可随机的菜品了，请减少排除天数'); return; }
+
+  if (available.length === 0) {
+    showToast('没有可随机的菜品了，请减少排除天数');
+    return;
+  }
 
   const selected = randomizeByRules(available, qty);
-  if (selected.length === 0) { showToast('随机失败，请检查菜单'); return; }
+  if (selected.length === 0) {
+    showToast('随机失败，请检查菜单');
+    return;
+  }
 
-  // Add to cart and highlight
   document.querySelectorAll('.dish-card.highlighted').forEach(el => el.classList.remove('highlighted'));
+
   selected.forEach(dish => {
     changeQty(dish.id, 1);
     const card = document.getElementById('dish-card-' + dish.id);
@@ -1065,15 +1078,6 @@ async function doRandomSelect() {
 
   document.getElementById('randomModal').classList.remove('open');
   showToast(`✨ 已随机选择 ${selected.length} 道菜`);
-
-  // Scroll to first selected dish
-  if (selected[0]) {
-    const firstCard = document.getElementById('dish-card-' + selected[0].id);
-    if (firstCard) {
-      switchPage('order', document.querySelector('[data-page="order"]'));
-      setTimeout(() => firstCard.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
-    }
-  }
 }
 
 function randomizeByRules(available, qty) {
