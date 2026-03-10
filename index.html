@@ -622,6 +622,15 @@ header {
     </div>
     <div style="font-size:14px;font-weight:600;color:var(--text-mid);margin-bottom:10px;">已选菜品</div>
     <div class="checkout-items" id="checkoutItems"></div>
+    <div style="margin-top:14px;">
+      <div style="font-size:14px;font-weight:600;color:var(--text-mid);margin-bottom:8px;">📝 备注</div>
+      <textarea id="orderRemark" placeholder="选填，如：少盐、不要辣、留着晚上吃…"
+        style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;
+               font-size:14px;font-family:inherit;color:var(--text-dark);background:var(--bg-card);
+               resize:none;height:80px;outline:none;line-height:1.6;transition:border .2s;"
+        onfocus="this.style.borderColor='var(--primary)'"
+        onblur="this.style.borderColor='var(--border)'"></textarea>
+    </div>
     <button class="confirm-order-btn" onclick="confirmOrder()">确认下单</button>
   </div>
 </div>
@@ -781,17 +790,20 @@ function renderMenu() {
   }).join('');
 
   updateCartUI();
+  // 渲染完成后初始化懒加载观察器
+  requestAnimationFrame(() => initLazyObserver());
 }
 
 function renderDishCard(dish) {
   const count = cart[dish.id] || 0;
-  const thumbContent = dish.image
-    ? `<img src="${dish.image}" alt="${dish.name}" onerror="this.parentElement.innerHTML='${getDishIcon(dish)}'">`
+  // 使用 data-src 懒加载，避免一次性加载全部图片
+  const thumb = dish.image
+    ? `<img class="lazy-img" data-src="${dish.image}" alt="${dish.name}" onerror="this.parentElement.innerHTML='${getDishIcon(dish)}'">`
     : getDishIcon(dish);
 
   return `
     <div class="dish-card" id="dish-card-${dish.id}" onclick="openDishDetail(${dish.id})">
-      <div class="dish-thumb">${dish.image ? `<img src="${dish.image}" alt="${dish.name}" onerror="this.parentElement.innerHTML='${getDishIcon(dish)}'">` : getDishIcon(dish)}</div>
+      <div class="dish-thumb">${thumb}</div>
       <div class="dish-info">
         <div class="dish-name">${dish.name}</div>
         <div class="dish-cat-tag">${dish.category}</div>
@@ -803,6 +815,40 @@ function renderDishCard(dish) {
       </div>
     </div>
   `;
+}
+
+// IntersectionObserver 懒加载实例
+let lazyObserver = null;
+function initLazyObserver() {
+  if (!('IntersectionObserver' in window)) {
+    // 不支持时直接加载全部
+    document.querySelectorAll('img.lazy-img').forEach(img => {
+      img.src = img.dataset.src;
+    });
+    return;
+  }
+  if (lazyObserver) lazyObserver.disconnect();
+  lazyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        if (img.dataset.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+        }
+        lazyObserver.unobserve(img);
+      }
+    });
+  }, { rootMargin: '80px 0px' }); // 提前80px开始加载
+  document.querySelectorAll('img.lazy-img').forEach(img => lazyObserver.observe(img));
+}
+
+// 从订单详情页通过菜名打开菜品详情（先关闭订单详情弹窗）
+function openDishDetailByName(name) {
+  const dish = menuData.find(d => d.name === name);
+  if (!dish) { showToast('菜品信息不存在'); return; }
+  document.getElementById('orderDetailModal').classList.remove('open');
+  setTimeout(() => openDishDetail(dish.id), 200);
 }
 
 function scrollToCategory(cat, el) {
@@ -894,6 +940,7 @@ function doSearch(keyword) {
           </div>
         </div>`;
     }).join('');
+  requestAnimationFrame(() => initLazyObserver());
 }
 
 function clearSearch() {
@@ -1233,12 +1280,14 @@ async function confirmOrder() {
     const res = await fetch('api/order.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'save', meal_type: selectedMealType, items, date, time })
+      body: JSON.stringify({ action: 'save', meal_type: selectedMealType, items, date, time,
+        remark: document.getElementById('orderRemark').value.trim() })
     });
     const data = await res.json();
     if (data.success) {
       showToast('✅ 订单已提交！');
       cart = {};
+      document.getElementById('orderRemark').value = '';
       updateCartUI();
       renderMenu();
       closeCheckout();
@@ -1353,12 +1402,14 @@ async function openOrderDetail(date) {
         <div class="order-detail-section">
           <div class="meal-header ${meal}">${mealEmojis[meal]} ${mealNames[meal]}${time ? ' · ' + time : ''}</div>
           ${items.map(item => `
-            <div class="order-detail-item">
+            <div class="order-detail-item" onclick="openDishDetailByName('${item.name}')"
+              style="cursor:pointer;transition:background .18s;" onmouseover="this.style.background='#f5f0eb'" onmouseout="this.style.background=''">
               <div class="order-detail-thumb">${item.image ? `<img src="${item.image}" style="width:100%;height:100%;object-fit:cover;border-radius:8px;" onerror="this.outerHTML='${getCategoryIcon(item.category)}'">` : getCategoryIcon(item.category)}</div>
               <div style="flex:1;font-size:14px;font-weight:500;">${item.name}</div>
-              <div style="font-size:13px;color:var(--text-light);">×${item.count}</div>
+              <div style="font-size:13px;color:var(--text-light);">×${item.count} ›</div>
             </div>
           `).join('')}
+        ${order[meal].remark ? `<div style="margin:8px 14px 4px;padding:8px 12px;background:#FFF8F0;border-radius:8px;font-size:13px;color:var(--text-mid);border-left:3px solid var(--accent);">📝 ${order[meal].remark}</div>` : ''}
         </div>
       `;
     });

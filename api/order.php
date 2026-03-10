@@ -100,9 +100,10 @@ if ($method === 'POST') {
     if ($action === 'save') {
         // 保存订单
         $meal_type = $data['meal_type'] ?? ''; // breakfast/lunch/dinner
-        $items = $data['items'] ?? [];
-        $date = $data['date'] ?? date('Ymd');
-        $time = $data['time'] ?? date('H:i:s');
+        $items     = $data['items']     ?? [];
+        $date      = $data['date']      ?? date('Ymd');
+        $time      = $data['time']      ?? date('H:i:s');
+        $remark    = mb_substr(trim($data['remark'] ?? ''), 0, 200); // 备注最长200字
         
         // 验证
         $date = preg_replace('/[^0-9]/', '', $date);
@@ -113,7 +114,7 @@ if ($method === 'POST') {
             json_response(['success' => false, 'message' => '请选择菜品']);
         }
         
-        $dir = get_order_dir($username);
+        $dir  = get_order_dir($username);
         $file = $dir . '/' . $date . '.json';
         
         // 读取已有订单
@@ -122,12 +123,14 @@ if ($method === 'POST') {
             $existing = json_decode(file_get_contents($file), true) ?? [];
         }
         
-        // 覆盖对应餐次
-        $existing[$meal_type] = [
+        // 覆盖对应餐次（备注为空时不存储该字段）
+        $meal_data = [
             'items' => $items,
-            'time' => $time,
+            'time'  => $time,
             'count' => count($items)
         ];
+        if ($remark !== '') $meal_data['remark'] = $remark;
+        $existing[$meal_type] = $meal_data;
         
         file_put_contents($file, json_encode($existing, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
         json_response(['success' => true, 'message' => '订单已保存']);
