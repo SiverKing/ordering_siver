@@ -418,12 +418,19 @@ header {
   width: 40px; height: 40px; border-radius: 8px; background: var(--bg);
   font-size: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
+.meal-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
 .meal-header {
-  padding: 8px 14px; border-radius: 10px; font-size: 14px; font-weight: 600; margin-bottom: 8px; display: inline-block;
+  padding: 8px 14px; border-radius: 10px; font-size: 14px; font-weight: 600; display: inline-block;
 }
 .meal-header.breakfast { background: #FFF3CD; color: #856404; }
 .meal-header.lunch { background: #D4EDDA; color: #155724; }
 .meal-header.dinner { background: #CCE5FF; color: #004085; }
+.edit-order-btn {
+  padding: 5px 12px; border-radius: 8px; border: 1.5px solid var(--primary);
+  background: transparent; color: var(--primary); font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: background .18s, color .18s;
+}
+.edit-order-btn:active { background: var(--primary); color: #fff; }
 
 /* === TOAST === */
 .toast {
@@ -669,6 +676,7 @@ let ordersPage = 1;
 let ordersHasMore = false;
 let selectedMealType = 'lunch';
 let ordersLoaded = false;
+let currentOrderDetail = null;
 
 // ============================================================
 //  INIT
@@ -1388,6 +1396,7 @@ async function openOrderDetail(date) {
     if (!data.success || !data.data) { showToast('订单不存在'); return; }
 
     const order = data.data;
+    currentOrderDetail = { date, order };
     const mealNames = { breakfast: '早餐', lunch: '午餐', dinner: '晚餐' };
     const mealEmojis = { breakfast: '🌅', lunch: '☀️', dinner: '🌙' };
     const formattedDate = `${date.slice(0,4)}-${date.slice(4,6)}-${date.slice(6,8)}`;
@@ -1400,7 +1409,10 @@ async function openOrderDetail(date) {
       const time = order[meal].time || '';
       html += `
         <div class="order-detail-section">
-          <div class="meal-header ${meal}">${mealEmojis[meal]} ${mealNames[meal]}${time ? ' · ' + time : ''}</div>
+          <div class="meal-header-row">
+            <div class="meal-header ${meal}">${mealEmojis[meal]} ${mealNames[meal]}${time ? ' · ' + time : ''}</div>
+            <button class="edit-order-btn" onclick="editOrderMeal('${meal}')">✏️ 修改订单</button>
+          </div>
           ${items.map(item => `
             <div class="order-detail-item" onclick="openDishDetailByName('${item.name}')"
               style="cursor:pointer;transition:background .18s;" onmouseover="this.style.background='#f5f0eb'" onmouseout="this.style.background=''">
@@ -1419,6 +1431,57 @@ async function openOrderDetail(date) {
   } catch(e) {
     showToast('加载失败');
   }
+}
+
+function editOrderMeal(mealType) {
+  if (!currentOrderDetail) return;
+  const { date, order } = currentOrderDetail;
+  const mealData = order[mealType];
+  if (!mealData) return;
+
+  const orderItems = mealData.items || [];
+  const time = mealData.time || '12:00:00';
+  const remark = mealData.remark || '';
+
+  // 关闭详情弹窗
+  document.getElementById('orderDetailModal').classList.remove('open');
+
+  // 将订单菜品装入购物车
+  cart = {};
+  orderItems.forEach(item => {
+    const dish = menuData.find(d => d.id === item.id) || menuData.find(d => d.name === item.name);
+    if (dish) cart[dish.id] = item.count;
+  });
+
+  // 还原原订单的日期时间
+  const year = parseInt(date.slice(0, 4));
+  const month = parseInt(date.slice(4, 6)) - 1;
+  const day = parseInt(date.slice(6, 8));
+  const [h, m, s] = time.split(':').map(Number);
+  checkoutPickedTime = new Date(year, month, day, h, m, s);
+
+  // 设置餐次
+  selectedMealType = mealType;
+
+  // 切换到点菜页
+  const orderNavBtn = document.querySelector('.nav-btn[data-page="order"]');
+  switchPage('order', orderNavBtn);
+  updateCartUI();
+  renderMenu();
+
+  const mealNames = { breakfast: '早餐', lunch: '午餐', dinner: '晚餐' };
+  showToast(`✏️ 正在修改${mealNames[mealType] || ''}订单，请加菜或减菜后重新下单`);
+
+  // 打开结算页（保留原订单状态，不重置）
+  setTimeout(() => {
+    updateCheckoutTimeDisplay(checkoutPickedTime);
+    document.querySelectorAll('.meal-type-btn').forEach(btn => {
+      btn.classList.toggle('selected', btn.dataset.val === mealType);
+    });
+    document.getElementById('orderRemark').value = remark;
+    renderCheckoutItems();
+    document.getElementById('checkoutPage').classList.add('open');
+  }, 300);
 }
 
 // ============================================================
